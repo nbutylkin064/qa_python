@@ -9,7 +9,7 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book(book_name)
         assert book_name in collector.books_genre
-        assert collector.books_genre[book_name] == ''  # проверяем что жанр пустой
+        assert collector.books_genre[book_name] == ''
 
     @pytest.mark.parametrize('book_name', ['', 'a' * 41])
     def test_add_new_book_invalid_name_book_not_added(self, book_name):
@@ -32,14 +32,12 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book(book_name)
         collector.set_book_genre(book_name, genre)
-        # Вместо get_book_genre проверяем напрямую в словаре - это то, что просил ревьювер
         assert collector.books_genre[book_name] == genre
 
     def test_set_book_genre_invalid_genre_genre_not_set(self):
         collector = BooksCollector()
         collector.add_new_book('Книга')
         collector.set_book_genre('Книга', 'Несуществующий жанр')
-        # Проверяем что жанр остался пустым в словаре
         assert collector.books_genre['Книга'] == ''
 
     # Тесты для get_book_genre
@@ -60,7 +58,7 @@ class TestBooksCollector:
         fantasy_books = collector.get_books_with_specific_genre('Фантастика')
         assert 'Война миров' in fantasy_books
         assert 'Марсианин' in fantasy_books
-        assert 'Оно' not in fantasy_books  # проверяем что книги другого жанра не попали
+        assert 'Оно' not in fantasy_books
 
     # Тесты для get_books_for_children
     def test_get_books_for_children_returns_books_without_age_rating(self):
@@ -86,11 +84,9 @@ class TestBooksCollector:
         collector.add_book_in_favorites('Мастер и Маргарита')
         collector.add_book_in_favorites('Преступление и наказание')
         
-        # Проверяем добавление в избранное
         assert 'Мастер и Маргарита' in collector.favorites
         assert 'Преступление и наказание' in collector.favorites
         
-        # Проверяем получение списка избранного
         favorites = collector.get_list_of_favorites_books()
         assert 'Мастер и Маргарита' in favorites
         assert 'Преступление и наказание' in favorites
